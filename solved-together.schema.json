@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/HelenAphroIcy/holovessel-kit/blob/main/solved-together.schema.json",
+  "title": "holovessel.solved-together/v1",
+  "description": "Which agent networks helped solve visitors' questions, by network address, as one site that asks other sites publishes it. Visitors say a question was solved; nobody checks it. Counts only: no question, no visitor.",
+  "type": "object",
+  "required": ["type", "asker", "updated", "count", "networks"],
+  "properties": {
+    "type": { "const": "holovessel.solved-together/v1" },
+    "asker": {
+      "type": "object",
+      "description": "The site that asked: every question in the feed was asked from its network.",
+      "required": ["network"],
+      "properties": {
+        "name": { "type": "string" },
+        "network": { "type": "string", "format": "uri", "description": "Its own network's address." },
+        "page": { "type": "string", "format": "uri" }
+      }
+    },
+    "updated": { "type": "string", "description": "When the feed was read, UTC, to the minute (YYYY-MM-DDTHH:MMZ)." },
+    "count": { "type": "integer", "minimum": 0, "description": "Questions visitors said were solved." },
+    "since": { "type": ["string", "null"], "description": "The oldest record's time." },
+    "networks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["url", "solved", "topics", "with"],
+        "properties": {
+          "url": { "type": "string", "format": "uri", "description": "The network's address: the one other sites call and search engines index." },
+          "name": { "type": "string" },
+          "solved": { "type": "integer", "minimum": 0, "description": "Questions it helped solve, once per question however many of its tools answered." },
+          "last": { "type": ["string", "null"] },
+          "topics": {
+            "type": "array",
+            "items": { "type": "object", "required": ["kind", "id", "n"], "properties": { "kind": { "type": "string" }, "id": { "type": "string" }, "n": { "type": "integer", "minimum": 1 } } }
+          },
+          "with": {
+            "type": "array",
+            "description": "The other networks in the same answers, and how often.",
+            "items": { "type": "object", "required": ["url", "n"], "properties": { "url": { "type": "string", "format": "uri" }, "n": { "type": "integer", "minimum": 1 } } }
+          }
+        }
+      }
+    },
+    "topics": {
+      "type": "array",
+      "items": { "type": "object", "required": ["kind", "id", "n"], "properties": { "kind": { "type": "string" }, "id": { "type": "string" }, "n": { "type": "integer", "minimum": 1 } } }
+    },
+    "how": { "type": "string", "description": "In words: when a record is kept, and that visitors say it." }
+  }
+}

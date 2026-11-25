@@ -1,7 +1,7 @@
 {
   "name": "holovessel-kit",
-  "version": "1.0.0",
-  "description": "Three small pieces from Holovessel (络宇) for agentic websites: the open agentic web read now, provenance marks, and star maps.",
+  "version": "1.1.0",
+  "description": "Five small pieces from Holovessel (络宇) for agentic websites: the open agentic web read now, provenance marks, star maps, a ledger anyone can check, and which sites actually helped solve questions.",
   "type": "module",
   "license": "MIT",
   "author": "Helen AphroIcy",
@@ -16,13 +16,18 @@
   "exports": {
     "./open-web.js": "./open-web.js",
     "./provenance.js": "./provenance.js",
-    "./starmap.js": "./starmap.js"
+    "./starmap.js": "./starmap.js",
+    "./ledger.js": "./ledger.js",
+    "./solved-together.js": "./solved-together.js"
   },
   "files": [
     "open-web.js",
     "provenance.js",
     "starmap.js",
     "starmap.schema.json",
+    "ledger.js",
+    "solved-together.js",
+    "solved-together.schema.json",
     "README.md",
     "LICENSE",
     "NOTICE"

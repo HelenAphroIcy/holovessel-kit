@@ -1,8 +1,8 @@
 # Holovessel kit
 
-Three small pieces from [Holovessel 络宇](https://aphrogenes.com/holovessel/), an astrolabe where every star is a website, made for the [Open Agentic Web Challenge](https://github.com/cognizant-ai-labs/agentic-web). They have no dependencies and run in a browser or in Node 18+.
+Five small pieces from [Holovessel 络宇](https://aphrogenes.com/holovessel/), an astrolabe where every star is a website, made for the [Open Agentic Web Challenge](https://github.com/cognizant-ai-labs/agentic-web). They have no dependencies and run in a browser or in Node 18+.
 
-络宇的三个小部件，给做代理网站的人用：开放代理网此刻的样子、◆●○出处记号、可以带走再重跑的星图。没有依赖，浏览器和Node 18以上都能跑。
+络宇的五个小部件，给做代理网站的人用：开放代理网此刻的样子、◆●○出处记号、可以带走再重跑的星图、谁都能核对的账本、「一起解决过问题」的开放数据。没有依赖，浏览器和Node 18以上都能跑。
 
 ## open-web.js: the open agentic web, read now
 
@@ -36,6 +36,31 @@ const run = await runMap(decodeMap(link.split("#map=")[1]).map, { full_moons: my
 ```
 
 `RUNNABLE` lists the read-only tools Holovessel runs; change it for your own. Partner steps are never run by the map: only a visitor can agree to them, in their own browser.
+
+## ledger.js: a list nobody has to take on trust
+
+An append-only list: each entry carries the SHA-256 of the entry before it, and its own over its canonical JSON (keys sorted, no spaces), so changing or removing any entry breaks every link after it. Whoever keeps the list publishes it whole; anyone can check every link, run rules of their own on every entry, and, holding an older head, check that a newer copy still holds it at the same place.
+
+```js
+import { seal, verifyChain } from "./ledger.js";
+ledger.push(await seal({ kind: "join", site: "https://example.org" }, ledger));   // {kind, site, n, prev, hash}
+const v = await verifyChain(ledger, { check: (entry) => [], head: oldHead, n: oldN });   // { ok, count, head, problems }
+```
+
+Seal one entry at a time. In Holovessel it keeps the Sidereal Domain's registrations ([visits?only=domain](https://aphrogenes.com/holovessel/visits?only=domain)): the page checks it in the visitor's browser, recalculates every star's region from its moment, and marks the region ◆ when it holds.
+
+## solved-together.js: which sites actually helped
+
+A site that asks other agent sites keeps, for each question a visitor says was solved, only the kind of question and which networks answered, and publishes the counts by network address, the one other sites call and search engines index (`holovessel.solved-together/v1`, schema in `solved-together.schema.json`). Visitors say it and nobody checks it; the feed says so, and it is one signal among others.
+
+```js
+import { feedOf, checkFeed, mergeFeeds } from "./solved-together.js";
+const feed = feedOf({ asker: { name: "My site", network: "https://my.site/agents" }, records, how: "Kept when a visitor says the answer solved their question." });
+// a search engine: many sites' feeds, by network; a site's word for itself is left out
+const useful = mergeFeeds(feeds);   // [{ url, solved, askers, last, topics, with }]
+```
+
+Holovessel publishes its own at [visits?only=solved](https://aphrogenes.com/holovessel/visits?only=solved), and its way-finding (`ask_the_way`) weighs it a little.
 
 ## Tests
 
