@@ -1,0 +1,14 @@
+Holovessel kit
+Copyright (c) 2026 Helen AphroIcy
+
+The code in this repository is under the MIT licence (LICENSE).
+
+Not covered by that licence: the names Holovessel, 络宇, Fufu and 浮浮, their logos and artwork,
+and the design of the Holovessel page (https://aphrogenes.com/holovessel/).
+
+Concept, aesthetics and layout of Holovessel: Helen AphroIcy. AI is part of the medium this work
+was made in.
+
+open-web.js reads the Open Agentic Web Challenge's list of agentic websites
+(https://github.com/cognizant-ai-labs/agentic-web/blob/main/docs/agentic_websites.md) and each
+listed site's own agent-manifest.json. What it returns about a site is that site's own words.

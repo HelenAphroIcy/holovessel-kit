@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aphrogenes.com/holovessel/starmap.schema.json",
+  "title": "Holovessel star map (holovessel.starmap/v1)",
+  "description": "One question saved as the steps it took, so it can be carried away and run again on another day. Tool steps are read-only and run again; partner steps are a record of what was asked of another site and whether the visitor agreed, and are never run without the visitor. Concept: Helen AphroIcy.",
+  "type": "object",
+  "required": ["steps"],
+  "properties": {
+    "type": { "const": "holovessel.starmap/v1" },
+    "question": { "type": "string", "maxLength": 300 },
+    "asked": { "type": "string", "format": "date-time" },
+    "lang": { "enum": ["zh", "en"] },
+    "steps": {
+      "type": "array", "minItems": 1, "maxItems": 8,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object", "required": ["tool"],
+            "properties": {
+              "kind": { "const": "tool" },
+              "tool": { "enum": ["search_collection", "noon_sun", "sky_now", "full_moons", "planet_now", "solar_terms", "stargazing_nights", "sky_names", "sky_traditions", "deep_space_now", "site_facts"] },
+              "args": { "type": "object", "description": "The tool's own arguments, as at the MCP door (tools/list)." },
+              "summary": { "type": "string", "maxLength": 200, "description": "What it said then, in one line." },
+              "digest": { "type": "string", "maxLength": 20, "description": "A fingerprint of what mattered in the result then; a run compares against it." }
+            }
+          },
+          {
+            "type": "object", "required": ["kind", "site"],
+            "properties": {
+              "kind": { "const": "partner" },
+              "site": { "type": "string", "maxLength": 200 },
+              "request": { "type": "string", "maxLength": 200 },
+              "decision": { "enum": ["allow", "decline", null] }
+            }
+          }
+        ]
+      }
+    },
+    "answer": { "type": "string", "maxLength": 600 },
+    "kept": { "type": "array", "maxItems": 6, "items": { "type": "string" }, "description": "What stayed in the visitor's browser and was never sent." },
+    "again": { "enum": ["on-return", null], "description": "on-return: run it again when the visitor comes back." }
+  }
+}

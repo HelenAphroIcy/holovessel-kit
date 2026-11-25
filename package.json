@@ -1,0 +1,36 @@
+{
+  "name": "holovessel-kit",
+  "version": "1.0.0",
+  "description": "Three small pieces from Holovessel (络宇) for agentic websites: the open agentic web read now, provenance marks, and star maps.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Helen AphroIcy",
+  "homepage": "https://aphrogenes.com/holovessel/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HelenAphroIcy/holovessel-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HelenAphroIcy/holovessel-kit/issues"
+  },
+  "exports": {
+    "./open-web.js": "./open-web.js",
+    "./provenance.js": "./provenance.js",
+    "./starmap.js": "./starmap.js"
+  },
+  "files": [
+    "open-web.js",
+    "provenance.js",
+    "starmap.js",
+    "starmap.schema.json",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
